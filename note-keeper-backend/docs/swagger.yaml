@@ -1,0 +1,99 @@
+definitions:
+  payload.LoginForm:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  presenter.AuthResult:
+    properties:
+      email:
+        type: string
+      id:
+        type: string
+      refreshToken:
+        type: string
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  presenter.Error400Response:
+    properties:
+      message:
+        example: Error Message
+        type: string
+      results: {}
+      status:
+        example: "400"
+        type: string
+    type: object
+  presenter.Error404Response:
+    properties:
+      message:
+        example: Error Message
+        type: string
+      results: {}
+      status:
+        example: "500"
+        type: string
+    type: object
+  presenter.Error500Response:
+    properties:
+      message:
+        example: Error Message
+        type: string
+      results: {}
+      status:
+        example: "500"
+        type: string
+    type: object
+  presenter.LoginResponse:
+    properties:
+      message:
+        example: SUCCESS
+        type: string
+      results:
+        $ref: '#/definitions/presenter.AuthResult'
+      status:
+        example: "200"
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /auth/login:
+    post:
+      description: login
+      parameters:
+      - description: Login
+        in: body
+        name: loginForm
+        required: true
+        schema:
+          $ref: '#/definitions/payload.LoginForm'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/presenter.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/presenter.Error400Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/presenter.Error404Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/presenter.Error500Response'
+      summary: Login
+      tags:
+      - auth
+swagger: "2.0"
